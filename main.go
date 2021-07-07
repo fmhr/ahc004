@@ -16,6 +16,27 @@ import (
 	"time"
 )
 
+var (
+	x uint32 = 123456789
+	y uint32 = 362436069
+	z uint32 = 521288629
+	w uint32 = 88675123
+	t uint32
+)
+
+func xorshift() uint32 {
+	t = x ^ (x << 11)
+	x = y
+	y = z
+	z = w
+	w = w ^ (w >> 19) ^ (t ^ (t >> 8))
+	return w
+}
+
+func xorshiftn(n int) int {
+	return int(xorshift()) % n
+}
+
 var sc = bufio.NewScanner(os.Stdin)
 var buff []byte
 
@@ -213,6 +234,7 @@ func solverB(sub []string) {
 	for i := 0; i < 20; i++ {
 		for used[x] {
 			x = rand.Intn(len(sub))
+			//x = int(xorshift()) % (len(sub))
 		}
 		str = sub[x]
 		used[x] = true
@@ -243,6 +265,7 @@ func solverB_solo(sub []string) (int, Matrix) {
 		}
 		for used[x] {
 			x = rand.Intn(len(sub))
+			//x = int(xorshift()) % (len(sub))
 		}
 		str = sub[x]
 		used[x] = true
@@ -252,6 +275,7 @@ func solverB_solo(sub []string) (int, Matrix) {
 				dna[i][j] = s[j]
 			} else {
 				dna[i][j] = ABCDEFGH[rand.Intn(8)]
+				//dna[i][j] = ABCDEFGH[xorshiftn(8)]
 			}
 		}
 	}
@@ -297,6 +321,7 @@ func solver_vertical_slot(sub []string, dna Matrix) {
 	for !timeout {
 		loop++
 		y := rand.Intn(20)
+		//y := xorshiftn(20)
 		s := score_right_shift(dna, sub, y)
 		if s >= max_score {
 			max_score = s

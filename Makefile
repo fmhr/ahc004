@@ -11,10 +11,10 @@ vis:
 
 
 runscript:
-	make build
+	go build
 	go run script/main.go
 
 
 pprof:
-	.solver -cpuprofile cpu.prof < tools/in/0000.txt
+	./solver -cpuprofile cpu.prof < tools/in/0000.txt
 	pprof -http=localhost:8080 cpu.prof
