@@ -16,5 +16,6 @@ runscript:
 
 
 pprof:
+	go build
 	./solver -cpuprofile cpu.prof < tools/in/0000.txt
 	pprof -http=localhost:8080 cpu.prof
