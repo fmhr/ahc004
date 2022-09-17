@@ -19,3 +19,8 @@ pprof:
 	go build
 	./solver -cpuprofile cpu.prof < tools/in/0000.txt
 	pprof -http=localhost:8080 cpu.prof
+
+setuptools:
+	curl -O https://img.atcoder.jp/ahc004/222362f13a30b1342bf79d0041bd4d39.zip
+	unzip 222362f13a30b1342bf79d0041bd4d39.zip
+	rm 222362f13a30b1342bf79d0041bd4d39.zip

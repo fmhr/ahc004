@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -33,6 +34,7 @@ func testn(n int) {
 }
 
 func testRun() {
+	log.Println(runtime.NumCPU())
 	score, n := run(0)
 	log.Printf("score=%d loop=%d\n", score, n)
 }
@@ -74,12 +76,12 @@ type Date struct {
 }
 
 func parallelRun() {
-	CORE := 4
+	CORE := 6
 	maxSeed := 100
 	sumScore := 0
 	var mu sync.Mutex
 	var wg sync.WaitGroup
-	sem := make(chan struct{}, CORE-1)
+	sem := make(chan struct{}, CORE)
 	datas := make([]Date, 0)
 	for seed := 0; seed < maxSeed; seed++ {
 		wg.Add(1)
